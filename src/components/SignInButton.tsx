@@ -8,7 +8,7 @@ import {signIn} from "next-auth/react"
 type Props = {
     text: string
 }
-
+ 
 const SignInButton = ({text}: Props) => {
   return (
     <div className='flex items-center'>
