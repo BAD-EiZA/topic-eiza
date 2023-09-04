@@ -27,8 +27,7 @@ const Hero = ({ imageHero, isDashboard }: Props) => {
                   </span>
                 </div>
                 <p className="font-semibold text-3xl text-white">
-                  "Great people are not created from ease, pleasure and comfort.
-                  They are formed through hardship, challenges and tears."
+                  "Great people are not created from ease, pleasure and comfort. They are formed through hardship, challenges and tears."
                 </p>
               </>
             ) : (
