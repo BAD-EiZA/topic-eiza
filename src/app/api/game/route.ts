@@ -63,7 +63,7 @@ export async function POST(req: Request, res: Response) {
 
       const manyData = data.questions.map((question: mcqQuestion) => {
         // mix up the options lol
-        const options = [
+        let options = [
           question.option1,
           question.option2,
           question.option3,

@@ -25,9 +25,10 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, CopyCheck } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import LoadingQuestions from "@/components/LoadingQuestions";
+import { toast } from "@/components/ui/use-toast";
 
 type Props = {
   topic: string;
@@ -55,31 +56,33 @@ const QuizCreation = ({ topic: topicParam }: Props) => {
       amount: 3,
     },
   });
-  function onSubmit(data: Input) {
+  const onSubmit = async (data: Input) => {
     setShowLoader(true);
-    getQuestions(
-      {
-        amount: data.amount,
-        topic: data.topic,
-        type: data.type,
+    getQuestions(data, {
+      onError: (error) => {
+        setShowLoader(false);
+        if (error instanceof AxiosError) {
+          if (error.response?.status === 500) {
+            toast({
+              title: "Error",
+              description: "Something went wrong. Please try again later.",
+              variant: "destructive",
+            });
+          }
+        }
       },
-      {
-        onSuccess: ({ gameId }) => {
-          setIsFinished(true);
-          setTimeout(() => {
-            if (form.getValues("type") === "open_ended") {
-              router.push(`/play/open-ended/${gameId}`);
-            } else {
-              router.push(`/play/mcq/${gameId}`);
-            }
-          }, 1000);
-        },
-        onError: () => {
-          setShowLoader(false);
-        },
-      }
-    );
-  }
+      onSuccess: ({ gameId }: { gameId: string }) => {
+        setIsFinished(true);
+        setTimeout(() => {
+          if (form.getValues("type") === "mcq") {
+            router.push(`/play/mcq/${gameId}`);
+          } else if (form.getValues("type") === "open_ended") {
+            router.push(`/play/open-ended/${gameId}`);
+          }
+        }, 2000);
+      },
+    });
+  };
 
   form.watch();
   if (showLoader) {
