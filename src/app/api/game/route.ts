@@ -27,7 +27,7 @@ export async function POST(req: Request, res: Response) {
         topic,
       },
     });
-    console.log(game, "kadal")
+    
     await prisma.topic_count.upsert({
       where: {
         topic,
