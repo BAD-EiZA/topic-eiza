@@ -79,7 +79,7 @@ const QuizCreation = ({ topic: topicParam }: Props) => {
           } else if (form.getValues("type") === "open_ended") {
             router.push(`/play/open-ended/${gameId}`);
           }
-        }, 1000);
+        }, 300);
       },
     });
   };
