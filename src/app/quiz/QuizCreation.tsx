@@ -86,7 +86,7 @@ const QuizCreation = ({ topic: topicParam }: Props) => {
     return <LoadingQuestions finished={finished} />;
   }
   return (
-    <div className="mt-2 flex justify-center mx-auto px-10 border">
+    <div className="mt-2 flex justify-center mx-auto px-10">
       <Card className=" items-center">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Quiz Creation</CardTitle>
